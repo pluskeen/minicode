@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟列表</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+<div id="app"></div>
+</body>
+
+<script type="module">
+  import {createApp} from './node_modules/vue/dist/vue.esm-browser.prod.js'
+  import FixedHeightListItems from './fixedHeightListItems.js'
+  import CustomHeightListItems from './customHeightListItems.js'
+  import AsyncListItems from './asyncListItems.js'
+
+  createApp(AsyncListItems).mount('#app')
+</script>
+
+
+</html>
