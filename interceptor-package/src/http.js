@@ -1,8 +1,8 @@
-import axios from './node_modules/axios/dist/esm/axios.min.js';
+import axios from 'axios';
 import {jsonToUnderline} from './utils.js'
 
 // 默认请求基址
-const BASE_URL = 'https://api.artic.edu/api/v1'
+const BASE_URL = '/api'
 // 默认头信息
 const HEADERS = {
   'Cache-Control': 'no-cache',
