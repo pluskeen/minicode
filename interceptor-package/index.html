@@ -8,8 +8,10 @@
 
 </body>
 <script type="module">
-  import axios from './node_modules/axios/dist/esm/axios.min.js';
+  import http from './http.js'
 
-  console.log(axios.create())
+  http.get('/artworks', {
+    params: {},
+  })
 </script>
 </html>

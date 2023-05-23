@@ -33,7 +33,6 @@ function capitalizeFirstLetter(str: string) {
 export function observableDecorator(target: any, key: string) {
   // prop -> onPropChange
   const targetKey = "on" + capitalizeFirstLetter(key) + "Change";
-  console.log(target)
   target[targetKey] =
     function (fn: (prev: any, next: any) => void) {
       let prev = this[key];
