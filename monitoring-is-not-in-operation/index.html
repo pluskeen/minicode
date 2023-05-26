@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>监测用户长时间未操作</title>
+</head>
+<body>
+</body>
+<script src="./index.js"></script>
+<script>
+  const cb = () => alert('done')
+  const timeout = 5000
+
+  new MonitoringIsNotInOperation({callback: cb, timeout})
+  new MonitoringIsNotInOperation()
+</script>
+</html>
