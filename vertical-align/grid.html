@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>css 实现垂直居中</title>
+</head>
+<style>
+  #box {
+    display: grid;
+    width: 300px;
+    height: 300px;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .two {
+    background: orange;
+  }
+
+  /* 使用伪类的方法，将中间元素的内容垂直居中 */
+  .two::after {
+    content:'';
+    width:0;
+    height:100%;
+    display:inline-block;
+    position:relative;
+    vertical-align:middle;
+    background:#f00;
+  }
+
+  .one, .three {
+    background: skyblue;
+  }
+</style>
+<body>
+<div id="box">
+  <div class="one"></div>
+  <div class="two">
+    <span>target item</span>
+  </div>
+  <div class="three"></div>
+</div>
+</body>
+</html>
