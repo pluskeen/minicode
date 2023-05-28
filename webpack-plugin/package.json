@@ -1,0 +1,16 @@
+{
+  "name": "webpack-version-plugin",
+  "version": "1.0.0",
+  "description": "自定义 webpack 插件，获取 package.json 内版本号，并输出为 json 文件",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1"
+  }
+}
