@@ -12,3 +12,4 @@
 - webpack 插件 webpack-plugin
   - version-webpack-plugin
 - css 垂直居中 vertical-align
+- 客户端存储封装 storage

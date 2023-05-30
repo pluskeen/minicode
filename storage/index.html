@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>客户端存储</title>
+</head>
+<body>
+
+</body>
+<script src="./storage.js"></script>
+<script>
+  const storage = new Storage({expire: 1000})
+
+  storage.set('111', 0)
+  storage.set('222', false)
+  storage.set('333', null)
+  storage.set('444', '')
+  storage.set('555', `alert(!!!!)`, 1)
+  setTimeout(() => {
+    console.log(storage.getStorageAll());
+    console.log(storage.getStorageKeys())
+    console.log(storage.getItemForIndex())
+    console.log(storage.hasStorage())
+    console.log(storage.hasStorage('111'))
+    console.log(storage.hasStorage('000'))
+    console.log(storage.get('111'))
+    console.log(storage.get('000'))
+    storage.clear()
+  }, 2000)
+
+</script>
+</html>
