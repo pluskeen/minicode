@@ -15,10 +15,10 @@ class Storage {
     if (!!options && Object.prototype.toString.call(options) === '[object Object]') {
       if (options.expire) {
         if (!Number.isInteger(options.expire)) {
-          throw new Error('expire must be the Integer');
+          throw new Error('Storage: expire must be the Integer');
         }
         if (options.expire < 0) {
-          throw new Error('expire must be greater than 0');
+          throw new Error('Storage: expire must be greater than 0');
         }
       }
 

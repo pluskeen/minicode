@@ -13,3 +13,4 @@
   - version-webpack-plugin
 - css 垂直居中 vertical-align
 - 客户端存储封装 storage
+- 轮询 poll-fetch

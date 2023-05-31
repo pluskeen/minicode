@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮询</title>
+</head>
+<body>
+
+</body>
+<script src="./index.js"></script>
+<script>
+  const fn1 = () => {
+    console.log('fn1 exec')
+  }
+
+  const fn2 = () => {
+    setTimeout(() => {
+      console.log('fn2', new Date().getSeconds())
+      console.log('fn2 exec')
+    }, 500)
+  }
+
+  const fn3 = () => {
+    console.log(obj1.a);
+  }
+
+  const pollFetch1 = new PollFetch(fn1, {delayTime: 1})
+  const pollFetch2 = new PollFetch(fn2, {delayTime: 1})
+  const pollFetch3 = new PollFetch(fn3, {delayTime: 2, immediately: false})
+
+  // pollFetch1.exec()
+  // pollFetch2.exec()
+  pollFetch3.exec().catch(err => console.error(err))
+</script>
+</html>
