@@ -8,7 +8,7 @@
 <body>
 
 </body>
-<script src="./index.js"></script>
+<script src="./lib/index.umd.js"></script>
 <script>
   const fn1 = () => {
     console.log('fn1 exec')
@@ -25,9 +25,9 @@
     console.log(obj1.a);
   }
 
-  const pollFetch1 = new PollFetch(fn1, {delayTime: 1})
-  const pollFetch2 = new PollFetch(fn2, {delayTime: 1})
-  const pollFetch3 = new PollFetch(fn3, {delayTime: 2, immediately: false})
+  const pollFetch1 = new pollFetch.PollFetch(fn1, {delayTime: 1})
+  const pollFetch2 = new pollFetch.PollFetch(fn2, {delayTime: 1})
+  const pollFetch3 = new pollFetch.PollFetch(fn3, {delayTime: 2, immediately: false})
 
   // pollFetch1.exec()
   // pollFetch2.exec()
