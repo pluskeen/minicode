@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>this</title>
+</head>
+<style>
+  .wrap {
+    position: relative;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #666666;
+    overflow: hidden;
+  }
+
+  .block {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    background: #666666;
+    transition: transform 0.2s, opacity 0.1s;
+    opacity: 0.5;
+    color: red;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .block .left, .block .right {
+    flex: 1;
+  }
+
+  .trans {
+    opacity: 1;
+  }
+
+  .scale {
+    animation: aaa 0.3s;
+  }
+
+  @keyframes aaa {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.2);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
+<body>
+<button class="random">加入随机 id 新元素</button>
+<div class="wrap"></div>
+</body>
+<script>
+  function getUuid() {
+    if (typeof crypto === 'object') {
+      if (typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+      }
+      if (typeof crypto.getRandomValues === 'function' && typeof Uint8Array === 'function') {
+        const callback = (c) => {
+          const num = Number(c);
+          return (num ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (num / 4)))).toString(16);
+        };
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, callback);
+      }
+    }
+    let timestamp = new Date().getTime();
+    let perforNow = (typeof performance !== 'undefined' && performance.now && performance.now() * 1000) || 0;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      let random = Math.random() * 16;
+      if (timestamp > 0) {
+        random = (timestamp + random) % 16 | 0;
+        timestamp = Math.floor(timestamp / 16);
+      } else {
+        random = (perforNow + random) % 16 | 0;
+        perforNow = Math.floor(perforNow / 16);
+      }
+      return (c === 'x' ? random : (random & 0x3) | 0x8).toString(16);
+    });
+  }
+
+  function random1toAny(max) {
+    let m = 5
+    if (max) {
+      m = max
+    }
+
+    return Math.ceil(Math.random() * m).toString()
+  }
+</script>
+<script>
+  // 元素出现后多久消失，ms
+  const hideTime = 3 * 1000
+  // 元素出现、隐藏的动画时间，ms
+  const animateTime = 200
+  // 元素固定高度
+  const elHeight = 40
+  // 最多展示多少个元素
+  const maxShow = 3
+  const randomEl = document.querySelector('.random')
+  const wrap = document.querySelector('.wrap')
+
+  let elList = []
+
+  wrap.style.setProperty('height', `${elHeight * maxShow}px`)
+
+  randomEl.addEventListener('click', () => {
+    const id = random1toAny(10)
+    const item = elList.find(c => c.id === id)
+
+    if (item) {
+      batterHandler(item)
+      sortOrder()
+    } else {
+      const divEl = createNewDiv(id)
+      insertIntoNewEl(divEl)
+      addElToList(divEl, setRemoveTimeout(id))
+    }
+  })
+
+  // 连击处理，传入 elList 里的元素项
+  function batterHandler(item) {
+    // console.log(item)
+    const now = new Date().getTime()
+
+    if (now - item.timestamp <= hideTime) {
+      item.timestamp = new Date().getTime()
+      clearTimeout(item.timeout)
+      item.timeout = setRemoveTimeout(item.id)
+      item.batter++
+
+      // 下面市连击效果处理
+      const children = Array.prototype.slice.call(item.el.childNodes)
+      // console.log(children);
+      const divElRight = children[1]
+      divElRight.innerHTML = '连击*' + item.batter
+      divElRight.classList.add('scale')
+      setTimeout(() => {
+        divElRight.classList.remove('scale')
+      }, 300)
+    }
+  }
+
+  // 创建新元素
+  function createNewDiv(id) {
+    const key = id || random1toAny()
+
+    const divEl = document.createElement('div')
+    divEl.setAttribute('class', 'block')
+    divEl.setAttribute('data-id', key)
+    divEl.setAttribute('data-timestamp', new Date().getTime().toString())
+
+    divEl.style.setProperty('transform', `translate(0, ${elList.length * elHeight}px)`)
+
+    const divElLeft = document.createElement('div')
+    const divElRight = document.createElement('div')
+    divElLeft.setAttribute('class', 'left')
+    divElRight.setAttribute('class', 'right')
+    divElLeft.innerHTML = `id${key}`
+
+    divEl.appendChild(divElLeft)
+    divEl.appendChild(divElRight)
+
+    return divEl
+  }
+
+  // 触发连击后，元素消失后排序
+  function sortOrder() {
+    elList = elList.sort((a, b) => b.batter - a.batter)
+
+    elList.forEach((c, i) => {
+      c.el.style.setProperty('transform', `translate(0, ${i * elHeight}px)`)
+      c.translateY = i * elHeight
+    })
+  }
+
+  function insertIntoNewEl(divEl) {
+    wrap.appendChild(divEl)
+
+    // 元素出现时动画
+    setTimeout(() => {
+      divEl.classList.add('trans')
+    })
+  }
+
+  // 设置移除元素定时器
+  function setRemoveTimeout(id) {
+    return setTimeout(() => {
+      const item = elList.find(c => c.id === id)
+      if (item) {
+        // 触发动画
+        item.el.style.setProperty('transform', `translate(-100px, ${item.translateY}px)`)
+
+        // 从列表删除
+        const idx = elList.findIndex(c => c.id === id)
+        elList.splice(idx, 1)
+
+        // 删除元素
+        setTimeout(() => {
+          wrap.removeChild(item.el)
+          sortOrder()
+        }, animateTime)
+      }
+    }, hideTime)
+  }
+
+  function addElToList(divEl, timeout) {
+    const id = divEl.dataset.id
+    // 新增时间、连击时间
+    const timestamp = Number(divEl.dataset.timestamp)
+
+    elList.push({el: divEl, timeout, id, timestamp, batter: 0, translateY: elList.length * elHeight})
+  }
+
+
+  var obj = {
+    name: 'obj',
+    foo1: () => {
+      console.log(this.name) // window
+    },
+    foo2: function() {
+      console.log(this.name) // obj
+      return () => {
+        console.log(this.name) // obj
+      }
+    }
+  }
+
+  var name = 'window'
+  obj.foo1()
+  obj.foo2()()
+
+</script>
+</html>
