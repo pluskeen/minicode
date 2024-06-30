@@ -2,7 +2,6 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "ES5",
-    "outDir": "./out",
     // ts 内置了一些 ts 声明文件，例如 Promise、Object.freeze 和浏览器的 API 声明。
     // 这些声明文件可以提供代码提示和警告功能。
     // 通常存放在 npm typescript 依赖的 lib 文件夹下，我们称之为标准库。
@@ -10,7 +9,14 @@
     "lib": [
       "dom",
       "es5",
-      "es6",
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "es2019",
+      "es2020",
+      "es2021",
+      "es2022",
       "ScriptHost",
     ]
   }

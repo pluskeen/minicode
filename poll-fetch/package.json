@@ -1,0 +1,20 @@
+{
+  "name": "poll-fetch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "rollup -c"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.2",
+    "rollup": "^3.28.0",
+    "rollup-plugin-dts": "^5.3.1",
+    "tslib": "^2.6.1",
+    "typescript": "^5.1.6"
+  }
+}
